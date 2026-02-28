@@ -1,0 +1,234 @@
+---
+interface Props {
+	showRerrol?: boolean;
+}
+const { showRerrol = false } = Astro.props;
+---
+
+<canvas id="automata-bg" transition:persist></canvas>
+<slot />
+{
+	showRerrol && (
+		<button class="button-92" id="automata-reroll">
+			Reroll Background Button
+		</button>
+	)
+}
+
+<style>
+	#automata-bg {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: -1;
+		opacity: 0.2;
+	}
+
+	.button-92 {
+		--c: #fff;
+		/* text color */
+		background:
+			linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
+				var(--_p, 100%) / 300% no-repeat,
+			#ff0000;
+		/* background color */
+		color: #0000;
+		border: none;
+		transform: perspective(500px)
+			rotateY(calc(20deg * var(--_i, -1)));
+		text-shadow:
+			calc(var(--_i, -1) * 0.08em) -0.01em 0 var(--c),
+			calc(var(--_i, -1) * -0.08em) 0.01em 2px #0004;
+		outline-offset: 0.1em;
+		transition: 0.3s;
+	}
+
+	.button-92:hover,
+	.button-92:focus-visible {
+		--_p: 0%;
+		--_i: 1;
+	}
+
+	.button-92:active {
+		text-shadow: none;
+		color: var(--c);
+		box-shadow: inset 0 0 9e9Q #0005;
+		transition: 0s;
+	}
+
+	.button-92 {
+		font-weight: bold;
+		font-size: 3rem;
+		margin: 0 auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		padding: 0.1em 0.3em;
+	}
+
+	/* #automata-reroll { */
+	/* 	width: 500px; */
+	/* 	height: 250px; */
+	/* 	margin: 50px auto; */
+	/* 	display: flex; */
+	/* 	justify-content: center; */
+	/* 	align-items: center; */
+	/* 	z-index: 10; */
+	/* 	background: transparent; */
+	/* 	border: 1px solid currentColor; */
+	/* 	border-radius: 4px; */
+	/* 	padding: 0.4em 0.7em; */
+	/* 	cursor: pointer; */
+	/* 	font-size: 1.2rem; */
+	/* 	opacity: 0.4; */
+	/* 	transition: opacity 0.2s; */
+	/* } */
+	/**/
+	/* #automata-reroll:hover { */
+	/* 	opacity: 1; */
+	/* } */
+</style>
+
+<script>
+	import init, * as wasm_exports from "../../automata_rust/pkg/web/automata_rust.js";
+
+	const ROWS_PER_FRAME = 5;
+	const RULE_LIST = [
+		// 29, 110, 126, 90, 45, 75, 86, 101, 18, 22, 26, 54, 60, 105, 150,
+		30,
+		110, 90,
+		// 45, 73, 75, 86, 89, 101, 105, 126, 150,
+	];
+
+	let animationId: number | null = null;
+
+	const CELL_SIZE = 6;
+
+	async function draw(rule_num: number) {
+		if (animationId !== null) {
+			cancelAnimationFrame(animationId);
+			animationId = null;
+		}
+
+		if (
+			performance.getEntriesByType("navigation")[0]?.type ===
+			"reload"
+		) {
+			sessionStorage.removeItem("automata-cache");
+		}
+
+		const canvas = document.getElementById(
+			"automata-bg",
+		) as HTMLCanvasElement;
+		const ctx = canvas.getContext("2d")!;
+
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		const cached = sessionStorage.getItem("automata-cache");
+		if (cached) {
+			const img = new Image();
+			img.onload = () => ctx.drawImage(img, 0, 0);
+			img.src = cached;
+			return;
+		}
+		const wasm = await init();
+		console.log("exports:", wasm_exports);
+		const { Automata } = wasm_exports;
+		const cols = Math.floor(canvas.width / CELL_SIZE);
+		const rows = Math.floor(canvas.height / CELL_SIZE) + 10;
+
+		const engine = new Automata(rule_num, cols, rows);
+
+		const cells = engine.generate_automata();
+
+		let currentRow = 0;
+
+		function frame() {
+			if (currentRow >= rows) {
+				sessionStorage.setItem(
+					"automata-cache",
+					canvas.toDataURL(),
+				);
+				return;
+			}
+
+			const end = Math.min(currentRow + ROWS_PER_FRAME, rows);
+			const rowCound = end - currentRow;
+			const imageData = ctx.createImageData(cols, rowCound);
+
+			for (let y = currentRow; y < end; y++) {
+				const rowStart = (y + 1) * cols;
+				const row = cells.subarray(
+					rowStart,
+					rowStart + cols,
+				);
+
+				for (let x = 0; x < cols; x++) {
+					if (row[x]) {
+						ctx.fillStyle = `rgb(143,188,143)`;
+						ctx.fillRect(
+							x * CELL_SIZE,
+							y * CELL_SIZE,
+							CELL_SIZE,
+							CELL_SIZE,
+						);
+					}
+				}
+			}
+
+			currentRow = end;
+			animationId = requestAnimationFrame(frame);
+		}
+
+		animationId = requestAnimationFrame(frame);
+	}
+	async function start() {
+		const canvas = document.getElementById(
+			"automata-bg",
+		) as HTMLCanvasElement;
+		const ctx = canvas.getContext("2d")!;
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+		if (
+			performance.getEntriesByType("navigation")[0]?.type ===
+			"reload"
+		) {
+			sessionStorage.removeItem("automata-cache");
+		}
+
+		const cached = sessionStorage.getItem("automata-cache");
+		if (cached) {
+			const img = new Image();
+			img.onload = () => ctx.drawImage(img, 0, 0);
+			img.src = cached;
+			return;
+		}
+		let rule_num =
+			RULE_LIST[Math.floor(Math.random() * RULE_LIST.length)];
+		console.log(`${rule_num}`);
+		await draw(rule_num);
+	}
+
+	document.getElementById("automata-reroll")?.addEventListener(
+		"click",
+		() => {
+			sessionStorage.removeItem("automata-cache");
+
+			let rule_num =
+				RULE_LIST[
+					Math.floor(
+						Math.random() *
+							RULE_LIST.length,
+					)
+				];
+			console.log(`${rule_num}`);
+			draw(rule_num);
+		},
+	);
+
+	start();
+</script>
