@@ -1,0 +1,15 @@
+{
+  "name": "automata_rust",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "automata_rust_bg.wasm",
+    "automata_rust.js",
+    "automata_rust.d.ts"
+  ],
+  "main": "automata_rust.js",
+  "types": "automata_rust.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
