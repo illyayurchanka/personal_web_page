@@ -1,5 +1,59 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import MrBobert from "../assets/mrbobert.jpg";
 ---
 
-<BaseLayout />
+<BaseLayout>
+	<h1>About Me</h1>
+	<p>
+		Hello, my name John Pepperon. I like fast cars 🏎️, basketball
+		🏀, physics ⚛️ and guns 🔫. My favourite basketball team is <span
+			style="color: blue">Dallas Mavericks</span
+		>. My favourite F1 team is <span
+			style="color: orange; display: inline; float:none;"
+			>McLaren</span
+		>. I am studying nuclear physisc and I love my family and
+		friends 🥰. This is my <a href="/photo">photo</a>.
+	</p>
+	<div class="bobert">
+		<Image
+			src={MrBobert}
+			alt="Mr.Robot meme in Russian"
+			width="300"
+			height="300"
+		/>
+	</div>
+
+	<style>
+		h1 {
+			position: static;
+			top: 0px;
+			left: 0px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		p {
+			display: block;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto;
+			width: 80%;
+		}
+		.orange {
+			color: orange;
+			display: inline;
+		}
+		.bobert {
+			display: flex;
+			align-items: center;
+			height: 400px;
+			justify-content: center;
+		}
+
+		img {
+			border-radius: 0px;
+		}
+	</style>
+</BaseLayout>

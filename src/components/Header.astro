@@ -1,22 +1,26 @@
 ---
-import { SITE_TITLE } from '../consts';
-import HeaderLink from './HeaderLink.astro';
-import Calendar from '../assets/calendar-svgrepo-com.svg';
+import { SITE_TITLE } from "../consts";
+import HeaderLink from "./HeaderLink.astro";
 ---
+
 <header>
 	<nav>
-	    <div class="title"><a href="/">{SITE_TITLE}</a></div>
+		<div class="title"><a href="/">{SITE_TITLE}</a></div>
 		<div class="internal-links">
-				<HeaderLink href="/blog" label='Blog'/>
-				<HeaderLink href="/about" label='About'/>
+			<HeaderLink href="/blog" label="Blog" />
+			<HeaderLink href="/about" label="About" />
 		</div>
 	</nav>
 </header>
 
 <style>
 	header {
+		/* position: sticky; */
+		top: 0;
+		z-index: 999;
 		margin: 0;
 		padding: 0 1em;
+		/* background: rgb(var(--green-light)); */
 		/* box-shadow: 0 2px 8px rgba(var(--black), 5%); */
 	}
 
@@ -25,27 +29,27 @@ import Calendar from '../assets/calendar-svgrepo-com.svg';
 		align-items: center;
 		justify-content: space-between;
 	}
-		.title a{
-				color: rgb(var(--gray));
-				font-size: 24px;
-		}
-		.title a:link {
-			  text-decoration: none;
-		}
+	.title a {
+		color: rgb(var(--green-dark));
+		font-size: 24px;
+	}
+	.title a:link {
+		text-decoration: none;
+	}
 
-		.title a:visited {
-			  text-decoration: none;
-		}
+	.title a:visited {
+		text-decoration: none;
+	}
 
-		.title a:hover {
-				color: rgb(var(--gray));
-				text-decoration: uppercase;
-		}
+	.title a:hover {
+		color: rgb(var(--green-dark));
+		text-decoration: uppercase;
+	}
 
-		.title a:active {
-			  text-decoration: uppercase;
-		}
-	.internal-links{
-		clip-path: inset(10px 0 9px 0);
+	.title a:active {
+		text-decoration: uppercase;
+	}
+	.internal-links {
+		clip-path: inset(9px 0 3px 0);
 	}
 </style>

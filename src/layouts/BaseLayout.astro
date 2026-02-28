@@ -15,11 +15,16 @@ const { showRerrol = false } = Astro.props;
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
+
 	<body>
-		<AutomataBackground showRerrol={showRerrol}>
-			<Header />
-		</AutomataBackground>
+		<Header />
+		<AutomataBackground showRerrol={showRerrol} />
 		<slot />
 		<Footer />
 	</body>
 </html>
+<style>
+	header {
+		position: sticky;
+	}
+</style>
