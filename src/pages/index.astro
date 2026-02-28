@@ -4,10 +4,27 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <!doctype html>
 <BaseLayout showRerrol={true} />
-
+<div id="mobile-block">
+	<p>This site is only available on desktop.</p>
+</div>
 <style>
 	.penguin {
 		position: relative;
 		left: 3rem;
+	}
+	#mobile-block {
+		display: none;
+		position: fixed;
+		inset: 0;
+		background: white;
+		z-index: 9999;
+		align-items: center;
+		justify-content: center;
+	}
+
+	@media (max-width: 768px) {
+		#mobile-block {
+			display: flex;
+		}
 	}
 </style>
