@@ -93,7 +93,7 @@ const { showRerrol = false } = Astro.props;
 </style>
 
 <script>
-	import init, * as wasm_exports from "../../automata_rust/pkg/web/automata_rust.js";
+	import init, * as wasm_exports from "./automata_rust/pkg/web/automata_rust.js";
 
 	const ROWS_PER_FRAME = 5;
 	const RULE_LIST = [
