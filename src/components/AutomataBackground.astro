@@ -8,8 +8,9 @@ const { showRerrol = false } = Astro.props;
 <canvas id="automata-bg" transition:persist></canvas>
 {
 	showRerrol && (
+		<h5>Push this button to change automata.</h5>
 		<button class="button-92" id="automata-reroll">
-			Reroll Background Button
+				PUSH ME PLEASE
 		</button>
 	)
 }
@@ -23,6 +24,12 @@ const { showRerrol = false } = Astro.props;
 		height: 100%;
 		z-index: -1;
 		opacity: 0.2;
+	}
+	h5 {
+			display: flex;
+			align-content: center;
+			justify-content: center;
+			color: rgb(var(--gray));
 	}
 
 	.button-92 {
@@ -96,10 +103,7 @@ const { showRerrol = false } = Astro.props;
 
 	const ROWS_PER_FRAME = 5;
 	const RULE_LIST = [
-		// 29, 110, 126, 90, 45, 75, 86, 101, 18, 22, 26, 54, 60, 105, 150,
-		30,
-		110, 90,
-		// 45, 73, 75, 86, 89, 101, 105, 126, 150,
+			29, 110, 126, 90, 45, 75, 86, 101, 18, 22, 26, 54, 60, 105, 150, 30, 110, 90,
 	];
 
 	let animationId: number | null = null;

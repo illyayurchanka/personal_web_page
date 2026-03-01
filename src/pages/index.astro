@@ -1,13 +1,85 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import creeper from "../assets/creeper.png";
+import jack_steve from "../assets/jack_steve.png";
+import dimonds from "../assets/dimonds.png";
 ---
 
 <!doctype html>
-<BaseLayout showRerrol={true} />
+<BaseLayout showRerrol={true}>
+	<h1>Welcome to my Page</h1>
+	<div class="photos">
+		<a href="https://buymeacoffee.com/kuwe"
+			><Image
+				src={dimonds}
+				alt="Dimond from minecraft"
+				width={250}
+				height={200}
+			/></a
+		>
+		<audio id="flint-steel" src="/flint-and-steel.mp3"></audio>
+		<Image
+			src={jack_steve}
+			alt="Steve played by Jack Black"
+			id="steve"
+			width={117}
+			height={117}
+			style="cursor: pointer;"
+		/>
+		<a
+			href="https://www.youtube.com/watch?v=kQABP88sp0c&pp=ygUXOS8xMSA0MCBtaW51dGVzIGZvb3RhZ2XSBwkJvgoBhyohjO8%3D"
+			><Image
+				src={creeper}
+				alt="Creeper"
+				width={300}
+				height={300}
+			/></a
+		>
+		<!-- <p>Here you can read my posts.</p> -->
+	</div>
+</BaseLayout>
 <div id="mobile-block">
 	<p>This site is only available on desktop.</p>
 </div>
 <style>
+	.photos {
+		display: flex;
+		margin: 0 auto;
+		align-content: center;
+		justify-content: center;
+		gap: 13%;
+	}
+	h1 {
+		display: flex;
+		align-content: center;
+		justify-content: center;
+		background: linear-gradient(
+			90deg,
+			red,
+			orange,
+			yellow,
+			green,
+			blue,
+			indigo,
+			violet,
+			red
+		);
+		background-size: 200%;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		animation: rainbow 3s linear infinite;
+	}
+
+	@keyframes rainbow {
+		0% {
+			background-position: 0%;
+		}
+		100% {
+			background-position: 200%;
+		}
+	}
 	.penguin {
 		position: relative;
 		left: 3rem;
@@ -28,3 +100,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 		}
 	}
 </style>
+
+<script>
+	const steve = document.getElementById("steve");
+	const audio = document.getElementById(
+		"flint-steel",
+	) as HTMLAudioElement;
+
+	steve.addEventListener("click", () => {
+		audio.play();
+	});
+</script>
