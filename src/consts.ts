@@ -3,3 +3,5 @@
 
 export const SITE_TITLE = 'John Pepperon Blog';
 export const SITE_DESCRIPTION = 'Welcome to my website!';
+export const YOUTUBE_VIDEO = 'https://www.youtube.com/watch?v=QmV14LtCBRY&pp=ygUVZXhwb2xzaW9uIGdyZWVuc2NyZWVu';
+export const DONATION_LINK = "https://buymeacoffee.com/kuwe";

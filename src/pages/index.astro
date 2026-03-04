@@ -4,13 +4,14 @@ import { Image } from "astro:assets";
 import creeper from "../assets/creeper.png";
 import jack_steve from "../assets/jack_steve.png";
 import dimonds from "../assets/dimonds.png";
+import { YOUTUBE_VIDEO, DONATION_LINK } from "../consts";
 ---
 
 <!doctype html>
 <BaseLayout showRerrol={true}>
 	<h1>Welcome to my Page</h1>
 	<div class="photos">
-		<a href="https://buymeacoffee.com/kuwe"
+		<a href={DONATION_LINK}
 			><Image
 				src={dimonds}
 				alt="Dimond from minecraft"
@@ -27,8 +28,7 @@ import dimonds from "../assets/dimonds.png";
 			height={117}
 			style="cursor: pointer;"
 		/>
-		<a
-			href="https://www.youtube.com/watch?v=kQABP88sp0c&pp=ygUXOS8xMSA0MCBtaW51dGVzIGZvb3RhZ2XSBwkJvgoBhyohjO8%3D"
+		<a href={YOUTUBE_VIDEO}
 			><Image
 				src={creeper}
 				alt="Creeper"
