@@ -1,6 +1,6 @@
 # About
 
-This page is a sandbox to realize my ideas and experiment with WASM. Additionaly I am learning CSS and HTML.
+This page is a sandbox to realize my ideas and experiment with WASM. Additionaly I am learning CSS, HTML and AstroJS.
 
 # Status
 
