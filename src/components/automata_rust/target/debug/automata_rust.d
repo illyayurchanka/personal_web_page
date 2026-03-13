@@ -1,0 +1,1 @@
+/Users/kuwe/website/blog_v1/src/components/automata_rust/target/debug/automata_rust: /Users/kuwe/website/blog_v1/src/components/automata_rust/src/lib.rs /Users/kuwe/website/blog_v1/src/components/automata_rust/src/main.rs

@@ -1,54 +1,90 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { Image } from "astro:assets";
-import creeper from "../assets/creeper.png";
-import jack_steve from "../assets/jack_steve.png";
-import dimonds from "../assets/dimonds.png";
-import { YOUTUBE_VIDEO, DONATION_LINK } from "../consts";
+import Image from "astro/components/Image.astro";
+import minionForest from "../assets/minion-forest.jpg";
+const imageModules = import.meta.glob("../assets/gallery/*.{jpg,png,webp}", {
+	eager: true,
+});
+const photos = Object.entries(imageModules).map(([_, mod], i) => ({
+	src: mod.default,
+	alt: `Photo ${i + 1}`,
+}));
 ---
 
 <!doctype html>
-<BaseLayout showRerrol={true}>
+<BaseLayout>
 	<h1>Welcome to my Page</h1>
-	<div class="photos">
-		<a href={DONATION_LINK}
-			><Image
-				src={dimonds}
-				alt="Dimond from minecraft"
-				width={250}
-				height={200}
-			/></a
-		>
-		<audio id="flint-steel" src="/flint-and-steel.mp3"></audio>
+	<div class="pictures">
+		<div class="gallery">
+			{
+				photos.map((img, i) => (
+					<Image
+						src={img.src}
+						alt={img.alt}
+						width={1200}
+						height={675}
+						format="webp"
+						quality={80}
+						loading={
+							i === 0
+								? "eager"
+								: "lazy"
+						}
+						fetchpriority={
+							i === 0
+								? "high"
+								: "auto"
+						}
+						style={`animation-delay: ${i * 4}s`}
+						class="slide"
+					/>
+				))
+			}
+		</div>
 		<Image
-			src={jack_steve}
-			alt="Steve played by Jack Black"
-			id="steve"
-			width={117}
-			height={117}
-			style="cursor: pointer;"
+			src={minionForest}
+			alt="minion in the Forest starting at you"
+			width={1200}
+			height={675}
+			class="minion"
 		/>
-		<a href={YOUTUBE_VIDEO}
-			><Image
-				src={creeper}
-				alt="Creeper"
-				width={300}
-				height={300}
-			/></a
-		>
-		<!-- <p>Here you can read my posts.</p> -->
 	</div>
 </BaseLayout>
 <div id="mobile-block">
 	<p>This site is only available on desktop.</p>
 </div>
 <style>
-	.photos {
-		display: flex;
+	.pictures {
+		position: relative;
+		width: min(1080px, 80%);
+		height: 80%;
 		margin: 0 auto;
-		align-content: center;
 		justify-content: center;
-		gap: 13%;
+		aspect-ratio: 16/9;
+		overflow: hidden;
+	}
+	.minion {
+		aspect-ratio: 16/9;
+	}
+	.gallery img {
+		position: absolute;
+		aspect-ratio: 16/9;
+		opacity: 0;
+		animation: slide 12s infinite;
+		z-index: 1;
+	}
+	@keyframes slide {
+		0%,
+		100% {
+			opacity: 0;
+		}
+		8%,
+		25% {
+			opacity: 1;
+		}
+		33% {
+			opacity: 0;
+		}
 	}
 	h1 {
 		display: flex;
@@ -84,30 +120,4 @@ import { YOUTUBE_VIDEO, DONATION_LINK } from "../consts";
 		position: relative;
 		left: 3rem;
 	}
-	#mobile-block {
-		display: none;
-		position: fixed;
-		inset: 0;
-		background: white;
-		z-index: 9999;
-		align-items: center;
-		justify-content: center;
-	}
-
-	@media (max-width: 768px) {
-		#mobile-block {
-			display: flex;
-		}
-	}
 </style>
-
-<script>
-	const steve = document.getElementById("steve");
-	const audio = document.getElementById(
-		"flint-steel",
-	) as HTMLAudioElement;
-
-	steve.addEventListener("click", () => {
-		audio.play();
-	});
-</script>

@@ -1,4 +1,5 @@
 use wasm_bindgen::prelude::*;
+use rand::RngExt;
 
 const STATES: [[u8; 3]; 8] = [
     [1, 1, 1],
@@ -40,9 +41,8 @@ impl Automata {
 
 impl Automata {
     fn _initial_condition(&self) -> Vec<u8> {
-        let mut data: Vec<u8> = vec![0; self.width as usize];
-        let midpoint = data.len() / 2;
-        data[midpoint] = 1;
+        let mut rng = rand::rng();
+        let data: Vec<u8> = (0..self.width).map(|_| rng.random_range(0..=1)).collect();
         data
     }
 

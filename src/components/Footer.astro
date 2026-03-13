@@ -2,6 +2,7 @@
 const today = new Date();
 import { Image } from "astro:assets";
 import localPenguinImage from "../assets/penguin-dance-club.gif";
+import AutomataBackground from "./AutomataBackground.astro";
 ---
 
 <footer>
@@ -23,7 +24,8 @@ import localPenguinImage from "../assets/penguin-dance-club.gif";
 			height="80"
 		/>
 	</div>
-	&copy; {today.getFullYear()} All rights reserved.
+	<AutomataBackground />
+	&copy; {today.getFullYear()} None of the rights reserved.
 	<div class="social-links">
 		<a href="https://mastodon.social/@kuw3" target="_blank">
 			<span class="sr-only">Follow Me on Mastodon</span>

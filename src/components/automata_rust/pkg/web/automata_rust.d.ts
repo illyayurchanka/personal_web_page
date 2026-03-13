@@ -15,6 +15,8 @@ export interface InitOutput {
     readonly __wbg_automata_free: (a: number, b: number) => void;
     readonly automata_generate_automata: (a: number) => [number, number];
     readonly automata_new: (a: number, b: number, c: number) => number;
+    readonly __wbindgen_exn_store: (a: number) => void;
+    readonly __externref_table_alloc: () => number;
     readonly __wbindgen_externrefs: WebAssembly.Table;
     readonly __wbindgen_free: (a: number, b: number, c: number) => void;
     readonly __wbindgen_start: () => void;

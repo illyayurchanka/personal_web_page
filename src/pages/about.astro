@@ -2,13 +2,18 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import MrBobert from "../assets/mrbobert.jpg";
+import { Image } from "astro:assets";
+import creeper from "../assets/creeper.png";
+import jack_steve from "../assets/jack_steve.png";
+import dimonds from "../assets/dimonds.png";
+import { YOUTUBE_VIDEO, DONATION_LINK } from "../consts";
 ---
 
 <BaseLayout>
 	<h1>About Me</h1>
 	<p>
-		Hello, my name Illya. I like fast cars 🏎️, basketball
-		🏀, physics ⚛️ and guns 🔫. My favourite basketball team is <span
+		Hello, my name Illya. I like fast cars 🏎️, basketball 🏀,
+		physics ⚛️ and guns 🔫. My favourite basketball team is <span
 			style="color: blue">Dallas Mavericks</span
 		>. My favourite F1 team is <span
 			style="color: orange; display: inline; float:none;"
@@ -16,16 +21,49 @@ import MrBobert from "../assets/mrbobert.jpg";
 		>. I am studying nuclear physisc and I love my family and
 		friends 🥰. This is my <a href="/photo">photo</a>.
 	</p>
-	<div class="bobert">
+	<div class="photos">
+		<a href={DONATION_LINK}
+			><Image
+				src={dimonds}
+				alt="Dimond from minecraft"
+				width={250}
+				height={200}
+			/></a
+		>
+		<audio id="flint-steel" src="/flint-and-steel.mp3"></audio>
 		<Image
-			src={MrBobert}
-			alt="Mr.Robot meme in Russian"
-			width="300"
-			height="300"
+			src={jack_steve}
+			alt="Steve played by Jack Black"
+			id="steve"
+			width={117}
+			height={117}
+			style="cursor: pointer;"
 		/>
+		<a href={YOUTUBE_VIDEO}
+			><Image
+				src={creeper}
+				alt="Creeper"
+				width={300}
+				height={300}
+			/></a
+		>
+		<!-- <Image -->
+		<!-- 	src={MrBobert} -->
+		<!-- 	alt="Mr.Robot meme in Russian" -->
+		<!-- 	width="300" -->
+		<!-- 	height="300" -->
+		<!-- /> -->
+		<!-- <p>Here you can read my posts.</p> -->
 	</div>
 
 	<style>
+		.photos {
+			display: flex;
+			margin: 0 auto;
+			align-content: center;
+			justify-content: center;
+			gap: 13%;
+		}
 		h1 {
 			position: static;
 			top: 0px;
@@ -45,15 +83,18 @@ import MrBobert from "../assets/mrbobert.jpg";
 			color: orange;
 			display: inline;
 		}
-		.bobert {
-			display: flex;
-			align-items: center;
-			height: 400px;
-			justify-content: center;
-		}
-
 		img {
 			border-radius: 0px;
 		}
 	</style>
 </BaseLayout>
+<script>
+	const steve = document.getElementById("steve");
+	const audio = document.getElementById(
+		"flint-steel",
+	) as HTMLAudioElement;
+
+	steve.addEventListener("click", () => {
+		audio.play();
+	});
+</script>
