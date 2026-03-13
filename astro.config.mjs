@@ -5,8 +5,10 @@ import sitemap from '@astrojs/sitemap';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import { defineConfig } from 'astro/config';
+import cloudflare from "@astrojs/cloudflare";
 // https://astro.build/config
 export default defineConfig({
+	output: 'static',
 	site: 'https://illyasocool.win',
 	integrations: [mdx(), sitemap()],
 	markdown: {
